@@ -1,17 +1,16 @@
-package com.software.newbii.domain.member;
-
+package com.software.newbii.domain.member.dto;
 
 import java.time.LocalDate;
+
+import com.software.newbii.domain.member.MemberRole;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
-@Builder
 @Getter
-@Setter
-@ToString
-public class MemberDto {
+@Builder
+@AllArgsConstructor
+public class MemberCommand {
 
   private Long id;
   private String email;
@@ -21,5 +20,6 @@ public class MemberDto {
   private String phone;
   private Long guardianId;
   private Long userId;
+  private String password;
 
 }
