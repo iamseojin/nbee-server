@@ -1,18 +1,20 @@
 package com.software.newbii.domain.location;
 
 
-import com.software.newbii.domain.member.Member;
-import com.software.newbii.global.entity.BaseTimeEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import java.math.BigDecimal;
+import com.software.newbii.domain.location.dto.LocationRequest;
+import jakarta.persistence.*;
+import lombok.*;
 
-public class Location extends BaseTimeEntity {
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Location {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
@@ -25,14 +27,49 @@ public class Location extends BaseTimeEntity {
   @Column(nullable = false, precision = 9, scale = 6)
   private BigDecimal longitude;
 
-  private String LocationName;
+  private String locationName;
 
   @Column(nullable = false)
   private LocationType locationType;
 
+  private Integer visitCount;
+
+  private LocalDateTime lastVisitedAt;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
+
+  @Builder
+  public Location(BigDecimal latitude,
+                  BigDecimal longitude,
+                  String locationName,
+                  LocationType locationType,
+                  Integer visitCount,
+                  LocalDateTime lastVisitedAt) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.locationName = locationName;
+    this.locationType = locationType;
+    this.visitCount= visitCount;
+    this.lastVisitedAt = lastVisitedAt;
+  }
+
+  public void post(Member member){
+    this.member = member;
+    member.getLocations().add(this);
+  }
+
+  public static Location from(LocationRequest request){
+    return Location.builder()
+            .latitude(request.getLatitude())
+            .longitude(request.getLongitude())
+            .locationName(request.getLocationName())
+            .locationType(request.getLocationType())
+            .visitCount(request.getVisitCount())
+            .lastVisitedAt(request.getLastVisitedAt())
+            .build();
+  }
 
 }
 
