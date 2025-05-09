@@ -5,14 +5,27 @@ services:
     image: mysql:8.4
     container_name: newb-db
     restart: unless-stopped
-    env_file: [.env]           # ← 전체 주입
-    ports: ["3306:3306"]
+    env_file: [.env]  # 환경 변수 파일을 통해 DB 설정을 로드
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+    ports:
+      - "3333:3306"  # MySQL 포트 노출
+    volumes:
+      - db_data:/var/lib/mysql  # 데이터 유지용 볼륨
 
   backend:
     build:
       context: .
       dockerfile: Dockerfile
-    depends_on: [db]
-    env_file: [.env]           # ← 동일 .env 재사용
+    depends_on:
+      - db  # DB가 먼저 시작되어야 함
+    env_file: [.env]  # 동일 .env 파일을 재사용하여 DB 연결 정보 제공
     ports:
-      - "${SERVER_PORT:-7070}:7070"
+      - "${SERVER_PORT:-7070}:7070"  # SERVER_PORT 환경 변수에 따라 포트 매핑, 기본 7070
+    environment:
+      SPRING_DATASOURCE_URL: "${DB_URL}"  # DB 연결 URL
+      SPRING_DATASOURCE_USERNAME: "${MYSQL_USER}"  # MySQL 사용자
+      SPRING_DATASOURCE_PASSWORD: "${DB_PASSWORD}"  # MySQL 비밀번호
+
+volumes:
+  db_data:
