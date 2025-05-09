@@ -1,5 +1,6 @@
 package com.software.newbii.domain.member;
 
+import com.software.newbii.domain.location.Location;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -59,7 +62,21 @@ public class Member {
         user.guardian = this;
     }
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Location> locations = new ArrayList<>();
 
+
+    @Builder
+    public Member(String email, String password, MemberRole role, String name,
+                  LocalDate birth, String phone, String oauthId) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.name = name;
+        this.birth = birth;
+        this.phone = phone;
+        this.oauthId = oauthId;
+    }
 
 
 }

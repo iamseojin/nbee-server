@@ -1,5 +1,10 @@
-package com.software.newbii.domain.member;
+package com.software.newbii.domain.member.service;
 
+import com.software.newbii.domain.member.Member;
+import com.software.newbii.domain.member.dto.MemberCommand;
+import com.software.newbii.domain.member.MemberRole;
+import com.software.newbii.domain.member.dto.MemberDto;
+import com.software.newbii.domain.member.repository.MemberRepository;
 import com.software.newbii.global.exception.BaseException;
 import com.software.newbii.global.exception.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
