@@ -38,6 +38,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0'
 
+	// GPT API
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+
 	implementation 'io.github.bonigarcia:webdrivermanager:5.5.3'
 	implementation 'mysql:mysql-connector-java:8.0.33'
 	runtimeOnly 'com.mysql:mysql-connector-j'
