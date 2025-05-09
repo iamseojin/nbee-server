@@ -39,7 +39,7 @@ public class Member {
 
     private String phone;
 
-
+    private String oauthId;
 
 
 
