@@ -2,6 +2,7 @@ package com.software.newbii.domain.location;
 
 
 import com.software.newbii.domain.location.dto.LocationRequest;
+import com.software.newbii.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
