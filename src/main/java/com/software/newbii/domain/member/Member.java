@@ -41,7 +41,9 @@ public class Member {
     private LocalDate birth;
 
     private String phone;
-
+    
+    private String oauthId;
+  
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "guardian_id")
     private Member guardian;
@@ -56,6 +58,7 @@ public class Member {
         this.user = user;
         user.guardian = this;
     }
+
 
 
 
