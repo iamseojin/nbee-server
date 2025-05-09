@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "location")
 public class Location {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
