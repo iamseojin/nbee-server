@@ -1,0 +1,47 @@
+#server:
+#  port: 8080
+#  address: 0.0.0.0
+#
+#  spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    datasource:
+#      url: ${DB_URL}
+#      username: root
+#      password: ${DB_PASSWORD}
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+#        show_sql: true
+#        format_sql: true
+#    hibernate:
+#      ddl-auto: update
+#    database-platform: org.hibernate.dialect.MariaDBDialect
+#
+#    # 스케줄러 사용
+#    main:
+#      allow-bean-definition-overriding: true
+#
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        SQL: INFO
+#        type:
+#          descriptor: TRACE
+#
+#  jwt:
+#    secret: ${JWT_SECRET}
+#
+#springdoc:
+#  api-docs:
+#    enabled: true
+#    path: /v3/api-docs
+#  swagger-ui:
+#    enabled: true
+#    path: /swagger-ui.html
+#
+#kakao:
+#  client_id: ${REST_API_KEY}
+#  redirect_uri: http://localhost:8080/callback

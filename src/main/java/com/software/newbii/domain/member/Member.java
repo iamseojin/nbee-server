@@ -8,8 +8,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.locationtech.jts.geom.MultiPolygon;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.JdbcTypeCode;
+import java.sql.Types;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,8 +24,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE member SET is_deleted = true, deleted_at = now() where id = ?")
 @SQLRestriction("is_deleted is FALSE")
+@Table(name = "member")
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +53,14 @@ public class Member {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "guardian_id")
     private Member guardian;
+
+    /**
+     * 안전 영역: MySQL geometry(MultiPolygon)
+     */
+    @JdbcTypeCode(org.hibernate.type.SqlTypes.GEOMETRY)
+    @Column(columnDefinition = "geometry(MULTIPOLYGON,4326)")
+    private MultiPolygon safeZone;
+
 
     @OneToOne(mappedBy = "guardian", fetch = FetchType.LAZY)
     private Member user;
