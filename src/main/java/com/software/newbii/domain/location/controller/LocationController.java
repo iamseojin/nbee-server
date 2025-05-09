@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Slf4j
@@ -28,11 +29,11 @@ public class LocationController {
     private final SafeZoneService safeZoneService;
     private final AlertService alertService;
 
-    @GetMapping("/check-home-radius")
+    @GetMapping("/check-safe")
     public ResponseEntity<Void> checkHomeRadius(
             @RequestParam Long memberId,
-            @RequestParam double latitude,
-            @RequestParam double longitude) {
+            @RequestParam BigDecimal latitude,
+            @RequestParam BigDecimal longitude) {
 
         boolean inside = safeZoneService.isInsideSafeZone(memberId, latitude, longitude);
         if (!inside) {
