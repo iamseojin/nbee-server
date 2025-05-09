@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.4
+    container_name: newb-db
+    restart: unless-stopped
+    env_file: [.env]           # ← 전체 주입
+    ports: ["3306:3306"]
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on: [db]
+    env_file: [.env]           # ← 동일 .env 재사용
+    ports:
+      - "${SERVER_PORT:-7070}:7070"
