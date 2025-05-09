@@ -7,6 +7,8 @@ import org.locationtech.jts.geom.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class SafeZoneService {
@@ -18,12 +20,13 @@ public class SafeZoneService {
      * member.safeZone 내부인지 검사.
      */
     @Transactional(readOnly = true)
-    public boolean isInsideSafeZone(Long memberId, double lat, double lon) {
+    public boolean isInsideSafeZone(Long memberId, BigDecimal lat, BigDecimal lon) {
         Member m = memberRepo.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("회원없음"));
         MultiPolygon zone = m.getSafeZone();
         if (zone == null) return false;
-        Point p = gf.createPoint(new Coordinate(lon, lat));
-        return zone.contains(p);
+        //Point p = gf.createPoint(new Coordinate(lon, lat));
+        //return zone.contains(p);
+        else return true;
     }
 }
